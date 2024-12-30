@@ -21,6 +21,18 @@ variable "lambda_schedule_expression" {
   default     = "rate(5 minutes)"
 }
 
+variable "timeout" {
+  description = "Timeout for the Lambda warmer function."
+  type        = number
+  default     = 60
+}
+
+variable "memory_size" {
+  description = "Memory size for the Lambda warmer function."
+  type        = number
+  default     = 128
+}
+
 variable "scheduler_max_retry_attempts" {
   description = "Maximum retry attempts for the EventBridge scheduler target."
   type        = number

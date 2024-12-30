@@ -24,8 +24,6 @@
 </p>
 <!-- markdownlint-restore -->
 
-
-
 ## Overview
 
 This module creates a Lambda function that automatically warms up other Lambda functions based on specified tags. It uses EventBridge Scheduler to trigger the warming process at regular intervals.
@@ -50,6 +48,8 @@ module "lambda_warmer" {
   prewarm_tag_key = "Project"
   prewarm_tag_value = "MyProject"
   lambda_schedule_expression = "rate(5 minutes)"
+  timeout = 60
+  memory_size = 256
   scheduler_max_retry_attempts = 0
   invocation_type = "Event"
 }
@@ -108,11 +108,13 @@ def lambda_handler(event, context):
 |------|-------------|------|---------|
 | environment | Current environment, e.g. dev, stage, prod | string | "default" |
 | lambda_function_name | Name of the Lambda function used for prewarming | string | "lambda-warmer" |
-| lambda_schedule_expression | EventBridge schedule expression for triggering the Lambda warmer | string | "rate(5 minutes)" |
+| lambda_schedule_expression | [EventBridge schedule expression](https://docs.aws.amazon.com/scheduler/latest/UserGuide/schedule-types.html) for triggering the Lambda warmer | string | "rate(5 minutes)" |
 | scheduler_max_retry_attempts | Maximum retry attempts for the EventBridge scheduler target | number | 0 |
+| timeout | Timeout for the Lambda function in seconds | number | 10 |
+| memory_size | Memory size for the Lambda function | number | 128 |
 | prewarm_tag_key | The tag key to identify functions that need prewarming | string | "Prewarm" |
 | prewarm_tag_value | The expected value of the tag for functions that need prewarming | string | "true" |
-| invocation_type | The invocation type of the Lambda Warmer function (Event / RequestResponse) | string | "Event" |
+| invocation_type | The [invocation type](https://docs.aws.amazon.com/lambda/latest/api/API_Invoke.html#API_Invoke_RequestSyntax) of the Lambda Warmer function (Event / RequestResponse) | string | "Event" |
 
 ## Outputs
 

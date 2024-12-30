@@ -116,7 +116,8 @@ resource "aws_lambda_function" "lambda_warmer" {
   runtime          = "python3.11"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   description      = "Lambda function to warm other functions"
-  timeout          = 60
+  timeout          = var.timeout
+  memory_size      = var.memory_size
 
   environment {
     variables = {
