@@ -42,9 +42,9 @@ module "lambda_warmer" {
   source = "../modules/lambda_warmer"
 
   aws_region = "ap-northeast-1"
-  environment = "production"
 
   # Optional: Custom configuration
+  environment = "production"
   prewarm_tag_key = "Project"
   prewarm_tag_value = "MyProject"
   lambda_schedule_expression = "rate(5 minutes)"
