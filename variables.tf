@@ -3,11 +3,14 @@ variable "aws_region" {
   description = "AWS region where the Lambda warmer will be deployed."
 }
 
-variable "environment" {
-  description = "Current environment: prod(ap-northeast-1)/dev(us-east-1)/local-dev(us-west-2), default dev(us-east-1)."
-}
+
 
 # Optional variables
+variable "environment" {
+  description = "Current environment, e.g. dev, stage, prod. the default value is 'default'."
+  default     = "default"
+}
+
 variable "lambda_function_name" {
   description = "Name of the Lambda function used for prewarming."
   default     = "lambda-warmer"
