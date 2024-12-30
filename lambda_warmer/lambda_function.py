@@ -12,6 +12,7 @@ logger.setLevel(logging.INFO)
 # Get tag key and value from environment variables
 PREWARM_TAG_KEY = os.environ.get("PREWARM_TAG_KEY", "Prewarm")
 PREWARM_TAG_VALUE = os.environ.get("PREWARM_TAG_VALUE", "true")
+INVOCATION_TYPE = os.environ.get("INVOCATION_TYPE", "Event")  # Event or RequestResponse
 
 
 def get_prewarm_functions():
@@ -84,10 +85,14 @@ def invoke_lambda(function_name):
         # Use Event invocation type to avoid blocking
         lambda_client.invoke(
             FunctionName=function_name,
-            InvocationType="Event",  # Asynchronous invocation to reduce latency
+            InvocationType=INVOCATION_TYPE,
             Payload=json.dumps({"action": "PREWARM"}),  # Send a custom prewarm signal
         )
-        logger.info("Successfully prewarmed %s", function_name)
+        logger.info(
+            "Successfully prewarmed %s (InvocationType=%s)",
+            function_name,
+            INVOCATION_TYPE,
+        )
     except Exception as e:
         logger.error("Failed to prewarm %s: %s", function_name, e)
 

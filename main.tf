@@ -122,6 +122,7 @@ resource "aws_lambda_function" "lambda_warmer" {
     variables = {
       PREWARM_TAG_KEY   = var.prewarm_tag_key
       PREWARM_TAG_VALUE = var.prewarm_tag_value
+      INVOCATION_TYPE   = var.invocation_type
     }
   }
 }

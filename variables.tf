@@ -38,3 +38,9 @@ variable "prewarm_tag_value" {
   type        = string
   default     = "true"
 }
+
+variable "invocation_type" {
+  description = "The invocation type of the Lambda Warmer function. Valid values: Event / RequestResponse. The default value is 'Event'."
+  type        = string
+  default     = "Event"
+}
